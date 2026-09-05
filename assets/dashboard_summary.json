@@ -1,0 +1,246 @@
+{
+  "generated_from": "notebooks/analysis.ipynb",
+  "kpis": {
+    "total_revenue": 3555389.31,
+    "total_units_sold": 694539,
+    "gross_margin_pct": 45.6,
+    "stockout_rate_pct": 1.31,
+    "estimated_lost_revenue_from_stockouts": 30808.4
+  },
+  "monthly_revenue": [
+    {
+      "month": "2025-01",
+      "revenue": 280091.58
+    },
+    {
+      "month": "2025-02",
+      "revenue": 252058.57
+    },
+    {
+      "month": "2025-03",
+      "revenue": 278933.61
+    },
+    {
+      "month": "2025-04",
+      "revenue": 267178.3
+    },
+    {
+      "month": "2025-05",
+      "revenue": 280230.66
+    },
+    {
+      "month": "2025-06",
+      "revenue": 300141.41
+    },
+    {
+      "month": "2025-07",
+      "revenue": 306845.78
+    },
+    {
+      "month": "2025-08",
+      "revenue": 315241.56
+    },
+    {
+      "month": "2025-09",
+      "revenue": 265403.99
+    },
+    {
+      "month": "2025-10",
+      "revenue": 278759.76
+    },
+    {
+      "month": "2025-11",
+      "revenue": 363590.8
+    },
+    {
+      "month": "2025-12",
+      "revenue": 366913.29
+    }
+  ],
+  "top_products": [
+    {
+      "name": "Energy Drink 4pk",
+      "category": "Beverages",
+      "revenue": 372283.21
+    },
+    {
+      "name": "Avocados 4pk",
+      "category": "Produce",
+      "revenue": 221920.27
+    },
+    {
+      "name": "Cold Brew Coffee 32oz",
+      "category": "Beverages",
+      "revenue": 200368.53
+    },
+    {
+      "name": "Orange Juice 64oz",
+      "category": "Beverages",
+      "revenue": 190263.71
+    },
+    {
+      "name": "Shredded Cheese 16oz",
+      "category": "Dairy",
+      "revenue": 175584.87
+    },
+    {
+      "name": "Paper Towels 6pk",
+      "category": "Household",
+      "revenue": 169574.57
+    },
+    {
+      "name": "Butter 1lb",
+      "category": "Dairy",
+      "revenue": 161480.48
+    },
+    {
+      "name": "Sparkling Water 12pk",
+      "category": "Beverages",
+      "revenue": 161382.02
+    },
+    {
+      "name": "Laundry Detergent 50oz",
+      "category": "Household",
+      "revenue": 143708.37
+    },
+    {
+      "name": "Croissants 4pk",
+      "category": "Bakery",
+      "revenue": 135688.08
+    }
+  ],
+  "category_share": [
+    {
+      "category": "Beverages",
+      "revenue": 924297.47
+    },
+    {
+      "category": "Dairy",
+      "revenue": 551239.79
+    },
+    {
+      "category": "Produce",
+      "revenue": 434472.39
+    },
+    {
+      "category": "Household",
+      "revenue": 404475.72
+    },
+    {
+      "category": "Frozen",
+      "revenue": 380083.13
+    },
+    {
+      "category": "Snacks",
+      "revenue": 368511.76
+    },
+    {
+      "category": "Bakery",
+      "revenue": 328949.14
+    },
+    {
+      "category": "Personal Care",
+      "revenue": 163359.91
+    }
+  ],
+  "store_performance": [
+    {
+      "store_name": "Chicago Loop",
+      "region": "Midwest",
+      "revenue": 730294.19,
+      "stockout_rate_pct": 3.5
+    },
+    {
+      "store_name": "Boston Back Bay",
+      "region": "Northeast",
+      "revenue": 650317.96,
+      "stockout_rate_pct": 1.85
+    },
+    {
+      "store_name": "Atlanta Midtown",
+      "region": "Southeast",
+      "revenue": 621810.75,
+      "stockout_rate_pct": 1.32
+    },
+    {
+      "store_name": "Austin Downtown",
+      "region": "South",
+      "revenue": 567173.7,
+      "stockout_rate_pct": 0.75
+    },
+    {
+      "store_name": "Denver Uptown",
+      "region": "West",
+      "revenue": 505322.11,
+      "stockout_rate_pct": 0.26
+    },
+    {
+      "store_name": "Seattle Capitol Hill",
+      "region": "Northwest",
+      "revenue": 480470.6,
+      "stockout_rate_pct": 0.17
+    }
+  ],
+  "abc_summary": [
+    {
+      "class": "A",
+      "products": 17,
+      "revenue": 2775541.63,
+      "revenue_share_pct": 78.1
+    },
+    {
+      "class": "B",
+      "products": 8,
+      "revenue": 586409.52,
+      "revenue_share_pct": 16.5
+    },
+    {
+      "class": "C",
+      "products": 5,
+      "revenue": 193438.16,
+      "revenue_share_pct": 5.4
+    }
+  ],
+  "top_stockout_risk": [
+    {
+      "name": "Orange Juice 64oz",
+      "pct_days_at_or_below_reorder_point": 41.1,
+      "lost_revenue": 4795.39
+    },
+    {
+      "name": "Sparkling Water 12pk",
+      "pct_days_at_or_below_reorder_point": 41.1,
+      "lost_revenue": 4666.16
+    },
+    {
+      "name": "Trail Mix 16oz",
+      "pct_days_at_or_below_reorder_point": 38.7,
+      "lost_revenue": 3970.32
+    },
+    {
+      "name": "Butter 1lb",
+      "pct_days_at_or_below_reorder_point": 39.4,
+      "lost_revenue": 3281.15
+    },
+    {
+      "name": "Granola Bars 12ct",
+      "pct_days_at_or_below_reorder_point": 38.9,
+      "lost_revenue": 2749.41
+    },
+    {
+      "name": "Whole Milk 1 Gallon",
+      "pct_days_at_or_below_reorder_point": 39.5,
+      "lost_revenue": 1995.0
+    },
+    {
+      "name": "Body Wash 18oz",
+      "pct_days_at_or_below_reorder_point": 39.0,
+      "lost_revenue": 1473.54
+    },
+    {
+      "name": "Paper Towels 6pk",
+      "pct_days_at_or_below_reorder_point": 32.2,
+      "lost_revenue": 1462.78
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+product_id,product_name,category,supplier,unit_cost,unit_price,reorder_point,reorder_qty,lead_time_days
+P001,Sparkling Water 12pk,Beverages,Heartland Foods Co,4.2,7.99,47,109,5
+P002,Cold Brew Coffee 32oz,Beverages,Coastal Supply Group,3.1,5.49,81,190,3
+P003,Orange Juice 64oz,Beverages,Coastal Supply Group,2.75,4.99,89,207,5
+P004,Energy Drink 4pk,Beverages,Pacific Distributors,5.6,9.49,88,206,2
+P005,Tortilla Chips Family Size,Snacks,Pacific Distributors,2.3,4.79,65,152,2
+P006,Trail Mix 16oz,Snacks,Pacific Distributors,3.9,6.99,38,90,5
+P007,Pretzel Sticks 14oz,Snacks,Pacific Distributors,1.8,3.49,35,81,4
+P008,Granola Bars 12ct,Snacks,Heartland Foods Co,3.2,5.99,31,73,5
+P009,Whole Milk 1 Gallon,Dairy,Coastal Supply Group,2.6,3.99,51,119,5
+P010,Greek Yogurt 4pk,Dairy,Pacific Distributors,3.4,5.49,56,131,3
+P011,Shredded Cheese 16oz,Dairy,Coastal Supply Group,3.8,5.99,69,162,2
+P012,Butter 1lb,Dairy,Pacific Distributors,3.1,4.79,82,190,5
+P013,Sourdough Loaf,Bakery,Heartland Foods Co,1.9,4.49,46,107,2
+P014,Bagels 6pk,Bakery,Pacific Distributors,1.6,3.99,64,149,4
+P015,Croissants 4pk,Bakery,Heartland Foods Co,2.2,4.99,64,150,3
+P016,Frozen Pizza 12in,Frozen,Pacific Distributors,3.5,6.99,42,97,2
+P017,Ice Cream Pint,Frozen,Summit Wholesale,2.4,4.99,54,125,3
+P018,Frozen Vegetables 16oz,Frozen,Pacific Distributors,1.5,2.99,52,121,4
+P019,Frozen Waffles 10ct,Frozen,Coastal Supply Group,2.1,3.99,35,83,2
+P020,Paper Towels 6pk,Household,Summit Wholesale,6.8,11.99,33,78,4
+P021,Dish Soap 24oz,Household,Coastal Supply Group,1.9,3.49,14,33,5
+P022,Laundry Detergent 50oz,Household,Pacific Distributors,7.2,12.99,26,62,3
+P023,Trash Bags 30ct,Household,Heartland Foods Co,5.4,9.49,18,41,2
+P024,Shampoo 12oz,Personal Care,Heartland Foods Co,3.6,6.99,25,59,4
+P025,Toothpaste 2pk,Personal Care,Coastal Supply Group,2.1,4.49,17,40,2
+P026,Body Wash 18oz,Personal Care,Coastal Supply Group,3.2,5.99,23,53,5
+P027,Bananas (lb),Produce,Heartland Foods Co,0.35,0.69,118,275,5
+P028,Avocados 4pk,Produce,Pacific Distributors,2.8,4.99,104,242,4
+P029,Baby Spinach 5oz,Produce,Pacific Distributors,1.7,3.49,78,182,3
+P030,Roma Tomatoes (lb),Produce,Heartland Foods Co,0.9,1.79,82,192,5
