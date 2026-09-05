@@ -1,1 +1,1 @@
-# retail-inventory-analytics-keep-it-Public-click-Create-repository
+# retail-inventory-analytics-keep-it-Public-click-Create-repositoryretail-inventory-analytics, keep it Public, click Create repository
