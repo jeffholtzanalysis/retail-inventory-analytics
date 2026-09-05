@@ -1,0 +1,147 @@
+==============================================================================
+1. Monthly revenue trend, chain-wide
+==============================================================================
+  month  units_sold   revenue
+2025-01       54332 280091.58
+2025-02       49513 252058.57
+2025-03       54619 278933.61
+2025-04       52400 267178.30
+2025-05       54784 280230.66
+2025-06       59359 300141.41
+2025-07       60452 306845.78
+2025-08       61994 315241.56
+2025-09       51791 265403.99
+2025-10       54544 278759.76
+2025-11       70070 363590.80
+2025-12       70681 366913.29
+
+==============================================================================
+2. Top 10 products by revenue, with category
+==============================================================================
+product_id           product_name  category  units_sold   revenue
+      P004       Energy Drink 4pk Beverages       39229 372283.21
+      P028           Avocados 4pk   Produce       44473 221920.27
+      P002  Cold Brew Coffee 32oz Beverages       36497 200368.53
+      P003      Orange Juice 64oz Beverages       38129 190263.71
+      P011   Shredded Cheese 16oz     Dairy       29313 175584.87
+      P020       Paper Towels 6pk Household       14143 169574.57
+      P012             Butter 1lb     Dairy       33712 161480.48
+      P001   Sparkling Water 12pk Beverages       20198 161382.02
+      P022 Laundry Detergent 50oz Household       11063 143708.37
+      P015         Croissants 4pk    Bakery       27192 135688.08
+
+==============================================================================
+3. Inventory turnover ratio per product (annualized)
+==============================================================================
+product_id               product_name      category  annual_cogs  avg_inventory_value  turnover_ratio
+      P013             Sourdough Loaf        Bakery     36272.90               158.54          228.79
+      P023            Trash Bags 30ct     Household     40543.20               174.18          232.77
+      P005 Tortilla Chips Family Size        Snacks     63089.00               269.75          233.88
+      P011       Shredded Cheese 16oz         Dairy    111389.40               473.92          235.04
+      P025             Toothpaste 2pk Personal Care     15325.80                65.03          235.67
+      P016          Frozen Pizza 12in        Frozen     64774.50               262.16          247.08
+      P004           Energy Drink 4pk     Beverages    219682.40               878.95          249.94
+      P019        Frozen Waffles 10ct        Frozen     33488.70               132.58          252.58
+      P022     Laundry Detergent 50oz     Household     79653.60               312.32          255.04
+      P015             Croissants 4pk        Bakery     59822.40               229.35          260.84
+      P010           Greek Yogurt 4pk         Dairy     80688.80               307.40          262.49
+      P029           Baby Spinach 5oz       Produce     56509.70               214.20          263.82
+      P017             Ice Cream Pint        Frozen     57189.60               204.99          278.98
+      P002      Cold Brew Coffee 32oz     Beverages    113140.70               398.89          283.64
+      P007        Pretzel Sticks 14oz        Snacks     26220.60                90.62          289.35
+      P014                 Bagels 6pk        Bakery     43124.80               146.77          293.83
+      P024               Shampoo 12oz Personal Care     38613.60               130.20          296.56
+      P020           Paper Towels 6pk     Household     96172.40               321.96          298.71
+      P028               Avocados 4pk       Produce    124524.40               411.42          302.67
+      P021             Dish Soap 24oz     Household     10856.60                34.89          311.12
+      P018     Frozen Vegetables 16oz        Frozen     34206.00               108.34          315.72
+      P026             Body Wash 18oz Personal Care     29712.00                93.69          317.15
+      P006             Trail Mix 16oz        Snacks     61253.40               192.16          318.77
+      P008          Granola Bars 12ct        Snacks     40867.20               127.42          320.74
+      P012                 Butter 1lb         Dairy    104507.20               322.17          324.38
+      P009        Whole Milk 1 Gallon         Dairy     54662.40               168.09          325.20
+      P027               Bananas (lb)       Produce     17384.50                51.38          338.38
+      P030         Roma Tomatoes (lb)       Produce     31308.30                92.41          338.80
+      P003          Orange Juice 64oz     Beverages    104854.75               301.67          347.58
+      P001       Sparkling Water 12pk     Beverages     84831.60               243.47          348.42
+
+==============================================================================
+4. Stockout rate by store and category
+==============================================================================
+     store_name      category  stockout_rate_pct  stockout_days
+   Chicago Loop        Snacks               5.27             77
+   Chicago Loop     Beverages               4.86             71
+   Chicago Loop       Produce               4.86             71
+   Chicago Loop         Dairy               4.04             59
+   Chicago Loop     Household               3.22             47
+   Chicago Loop Personal Care               3.20             35
+Boston Back Bay     Beverages               2.81             41
+Boston Back Bay        Snacks               2.81             41
+Boston Back Bay       Produce               2.26             33
+Atlanta Midtown       Produce               2.05             30
+Boston Back Bay Personal Care               2.01             22
+Atlanta Midtown        Snacks               1.99             29
+Boston Back Bay         Dairy               1.85             27
+Boston Back Bay     Household               1.85             27
+Atlanta Midtown     Beverages               1.64             24
+
+==============================================================================
+5. ABC analysis (Pareto): cumulative revenue share by product
+==============================================================================
+product_id               product_name   revenue  cum_revenue_pct abc_class
+      P004           Energy Drink 4pk 372283.21             10.5         A
+      P028               Avocados 4pk 221920.27             16.7         A
+      P002      Cold Brew Coffee 32oz 200368.53             22.3         A
+      P003          Orange Juice 64oz 190263.71             27.7         A
+      P011       Shredded Cheese 16oz 175584.87             32.6         A
+      P020           Paper Towels 6pk 169574.57             37.4         A
+      P012                 Butter 1lb 161480.48             41.9         A
+      P001       Sparkling Water 12pk 161382.02             46.5         A
+      P022     Laundry Detergent 50oz 143708.37             50.5         A
+      P015             Croissants 4pk 135688.08             54.3         A
+      P005 Tortilla Chips Family Size 131389.70             58.0         A
+      P010           Greek Yogurt 4pk 130288.68             61.7         A
+      P016          Frozen Pizza 12in 129363.93             65.3         A
+      P017             Ice Cream Pint 118906.71             68.7         A
+      P029           Baby Spinach 5oz 116011.09             72.0         A
+      P006             Trail Mix 16oz 109784.94             75.0         A
+      P014                 Bagels 6pk 107542.47             78.1         A
+      P013             Sourdough Loaf  85718.59             80.5         B
+      P009        Whole Milk 1 Gallon  83885.76             82.8         B
+      P008          Granola Bars 12ct  76498.29             85.0         B
+      P024               Shampoo 12oz  74974.74             87.1         B
+      P023            Trash Bags 30ct  71250.92             89.1         B
+      P018     Frozen Vegetables 16oz  68183.96             91.0         B
+      P019        Frozen Waffles 10ct  63628.53             92.8         B
+      P030         Roma Tomatoes (lb)  62268.73             94.6         B
+      P026             Body Wash 18oz  55617.15             96.1         C
+      P007        Pretzel Sticks 14oz  50838.83             97.6         C
+      P027               Bananas (lb)  34272.30             98.5         C
+      P025             Toothpaste 2pk  32768.02             99.4         C
+      P021             Dish Soap 24oz  19941.86            100.0         C
+
+==============================================================================
+6. Store ranking by revenue per day open, with rank window function
+==============================================================================
+          store_name    region  total_revenue  revenue_rank
+        Chicago Loop   Midwest      730294.19             1
+     Boston Back Bay Northeast      650317.96             2
+     Atlanta Midtown Southeast      621810.75             3
+     Austin Downtown     South      567173.70             4
+       Denver Uptown      West      505322.11             5
+Seattle Capitol Hill Northwest      480470.60             6
+
+==============================================================================
+7. Products most frequently below reorder point (replenishment risk)
+==============================================================================
+product_id         product_name  reorder_point  days_at_or_below_reorder_point  pct_of_days
+      P001 Sparkling Water 12pk             47                             900         41.1
+      P003    Orange Juice 64oz             89                             900         41.1
+      P030   Roma Tomatoes (lb)             82                             880         40.2
+      P027         Bananas (lb)            118                             878         40.1
+      P009  Whole Milk 1 Gallon             51                             864         39.5
+      P012           Butter 1lb             82                             862         39.4
+      P026       Body Wash 18oz             23                             855         39.0
+      P008    Granola Bars 12ct             31                             851         38.9
+      P006       Trail Mix 16oz             38                             847         38.7
+      P021       Dish Soap 24oz             14                             843         38.5

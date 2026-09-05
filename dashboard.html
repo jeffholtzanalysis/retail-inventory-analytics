@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retail Inventory Analytics Dashboard</title>
+<script src="vendor/chart.umd.js"></script>
+<style>
+  :root {
+    --bg: #f5f7fa;
+    --card-bg: #ffffff;
+    --text: #1a2233;
+    --muted: #5b6472;
+    --border: #e3e7ee;
+    --accent: #2563eb;
+    --accent-soft: #eaf0fe;
+    --danger: #dc2626;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1420;
+      --card-bg: #171e2c;
+      --text: #eef1f6;
+      --muted: #9aa4b2;
+      --border: #262f42;
+      --accent: #5b8bff;
+      --accent-soft: #1b2740;
+      --danger: #f87171;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 32px 20px 64px; }
+  header { margin-bottom: 28px; }
+  header h1 { margin: 0 0 6px; font-size: 1.6rem; }
+  header p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  header .links { margin-top: 12px; display: flex; gap: 16px; flex-wrap: wrap; }
+  header .links a {
+    color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 600;
+  }
+  header .links a:hover { text-decoration: underline; }
+
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .kpi {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .kpi .label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .kpi .value { font-size: 1.55rem; font-weight: 700; margin-top: 6px; }
+  .kpi.warn .value { color: var(--danger); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px 8px;
+  }
+  .card h2 { margin: 0 0 12px; font-size: 1rem; }
+  .card canvas { max-height: 300px; }
+  .card.wide { grid-column: 1 / -1; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  td.num, th.num { text-align: right; }
+
+  footer { margin-top: 36px; color: var(--muted); font-size: 0.82rem; line-height: 1.6; }
+  footer a { color: var(--accent); }
+
+  @media (max-width: 780px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Retail Inventory Analytics Dashboard</h1>
+    <p>FY2025 &middot; 6 stores &middot; 30 SKUs across 8 categories &middot; 65,700 store/product/day records</p>
+    <div class="links">
+      <a href="https://github.com/jh1990651/retail-inventory-analytics" target="_blank" rel="noopener">Source code &amp; README</a>
+      <a href="notebooks/analysis.ipynb" target="_blank" rel="noopener">Analysis notebook</a>
+      <a href="sql/queries.sql" target="_blank" rel="noopener">SQL queries</a>
+    </div>
+  </header>
+
+  <section class="kpis" id="kpi-cards"></section>
+
+  <section class="grid">
+    <div class="card wide">
+      <h2>Monthly Revenue &mdash; FY2025</h2>
+      <canvas id="revenueTrend"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Top 10 Products by Revenue</h2>
+      <canvas id="topProducts"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Revenue Share by Category</h2>
+      <canvas id="categoryShare"></canvas>
+    </div>
+
+    <div class="card wide">
+      <h2>Store Performance: Revenue vs. Stockout Rate</h2>
+      <canvas id="storePerf"></canvas>
+    </div>
+
+    <div class="card wide">
+      <h2>Top Stockout-Risk SKUs (highest estimated lost revenue)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th class="num">Days at/below reorder point</th>
+            <th class="num">Est. lost revenue</th>
+          </tr>
+        </thead>
+        <tbody id="riskTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Data is synthetically generated (see <code>data/generate_data.py</code>) to model a realistic
+    retail chain with seasonality, promotions, and lead-time-based replenishment &mdash;
+    built as a portfolio project to demonstrate data analysis, SQL, and dashboarding skills.
+    Full write-up in the <a href="https://github.com/jh1990651/retail-inventory-analytics#readme" target="_blank" rel="noopener">repository README</a>.
+  </footer>
+</div>
+
+<script>
+const DATA = {"generated_from": "notebooks/analysis.ipynb", "kpis": {"total_revenue": 3555389.31, "total_units_sold": 694539, "gross_margin_pct": 45.6, "stockout_rate_pct": 1.31, "estimated_lost_revenue_from_stockouts": 30808.4}, "monthly_revenue": [{"month": "2025-01", "revenue": 280091.58}, {"month": "2025-02", "revenue": 252058.57}, {"month": "2025-03", "revenue": 278933.61}, {"month": "2025-04", "revenue": 267178.3}, {"month": "2025-05", "revenue": 280230.66}, {"month": "2025-06", "revenue": 300141.41}, {"month": "2025-07", "revenue": 306845.78}, {"month": "2025-08", "revenue": 315241.56}, {"month": "2025-09", "revenue": 265403.99}, {"month": "2025-10", "revenue": 278759.76}, {"month": "2025-11", "revenue": 363590.8}, {"month": "2025-12", "revenue": 366913.29}], "top_products": [{"name": "Energy Drink 4pk", "category": "Beverages", "revenue": 372283.21}, {"name": "Avocados 4pk", "category": "Produce", "revenue": 221920.27}, {"name": "Cold Brew Coffee 32oz", "category": "Beverages", "revenue": 200368.53}, {"name": "Orange Juice 64oz", "category": "Beverages", "revenue": 190263.71}, {"name": "Shredded Cheese 16oz", "category": "Dairy", "revenue": 175584.87}, {"name": "Paper Towels 6pk", "category": "Household", "revenue": 169574.57}, {"name": "Butter 1lb", "category": "Dairy", "revenue": 161480.48}, {"name": "Sparkling Water 12pk", "category": "Beverages", "revenue": 161382.02}, {"name": "Laundry Detergent 50oz", "category": "Household", "revenue": 143708.37}, {"name": "Croissants 4pk", "category": "Bakery", "revenue": 135688.08}], "category_share": [{"category": "Beverages", "revenue": 924297.47}, {"category": "Dairy", "revenue": 551239.79}, {"category": "Produce", "revenue": 434472.39}, {"category": "Household", "revenue": 404475.72}, {"category": "Frozen", "revenue": 380083.13}, {"category": "Snacks", "revenue": 368511.76}, {"category": "Bakery", "revenue": 328949.14}, {"category": "Personal Care", "revenue": 163359.91}], "store_performance": [{"store_name": "Chicago Loop", "region": "Midwest", "revenue": 730294.19, "stockout_rate_pct": 3.5}, {"store_name": "Boston Back Bay", "region": "Northeast", "revenue": 650317.96, "stockout_rate_pct": 1.85}, {"store_name": "Atlanta Midtown", "region": "Southeast", "revenue": 621810.75, "stockout_rate_pct": 1.32}, {"store_name": "Austin Downtown", "region": "South", "revenue": 567173.7, "stockout_rate_pct": 0.75}, {"store_name": "Denver Uptown", "region": "West", "revenue": 505322.11, "stockout_rate_pct": 0.26}, {"store_name": "Seattle Capitol Hill", "region": "Northwest", "revenue": 480470.6, "stockout_rate_pct": 0.17}], "abc_summary": [{"class": "A", "products": 17, "revenue": 2775541.63, "revenue_share_pct": 78.1}, {"class": "B", "products": 8, "revenue": 586409.52, "revenue_share_pct": 16.5}, {"class": "C", "products": 5, "revenue": 193438.16, "revenue_share_pct": 5.4}], "top_stockout_risk": [{"name": "Orange Juice 64oz", "pct_days_at_or_below_reorder_point": 41.1, "lost_revenue": 4795.39}, {"name": "Sparkling Water 12pk", "pct_days_at_or_below_reorder_point": 41.1, "lost_revenue": 4666.16}, {"name": "Trail Mix 16oz", "pct_days_at_or_below_reorder_point": 38.7, "lost_revenue": 3970.32}, {"name": "Butter 1lb", "pct_days_at_or_below_reorder_point": 39.4, "lost_revenue": 3281.15}, {"name": "Granola Bars 12ct", "pct_days_at_or_below_reorder_point": 38.9, "lost_revenue": 2749.41}, {"name": "Whole Milk 1 Gallon", "pct_days_at_or_below_reorder_point": 39.5, "lost_revenue": 1995.0}, {"name": "Body Wash 18oz", "pct_days_at_or_below_reorder_point": 39.0, "lost_revenue": 1473.54}, {"name": "Paper Towels 6pk", "pct_days_at_or_below_reorder_point": 32.2, "lost_revenue": 1462.78}]};
+
+const fmtMoney = (n) => "$" + Number(n).toLocaleString(undefined, {maximumFractionDigits: 0});
+const fmtMoneyShort = (n) => {
+  const abs = Math.abs(n);
+  if (abs >= 1000) return "$" + (n/1000).toFixed(0) + "K";
+  return "$" + n.toFixed(0);
+};
+
+const palette = ["#2563eb", "#60a5fa", "#93c5fd", "#1d4ed8", "#3b82f6", "#0ea5e9", "#818cf8", "#38bdf8"];
+
+const isDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+Chart.defaults.color = isDark ? "#9aa4b2" : "#5b6472";
+Chart.defaults.borderColor = isDark ? "#262f42" : "#e3e7ee";
+
+function renderKpis() {
+  const k = DATA.kpis;
+  const cards = [
+    { label: "Total Revenue", value: fmtMoney(k.total_revenue) },
+    { label: "Units Sold", value: Number(k.total_units_sold).toLocaleString() },
+    { label: "Gross Margin", value: k.gross_margin_pct + "%" },
+    { label: "Stockout Rate", value: k.stockout_rate_pct + "%", warn: true },
+    { label: "Est. Lost Revenue (Stockouts)", value: fmtMoney(k.estimated_lost_revenue_from_stockouts), warn: true },
+  ];
+  document.getElementById("kpi-cards").innerHTML = cards.map(c => `
+    <div class="kpi${c.warn ? " warn" : ""}">
+      <div class="label">${c.label}</div>
+      <div class="value">${c.value}</div>
+    </div>
+  `).join("");
+}
+
+function renderRevenueTrend() {
+  new Chart(document.getElementById("revenueTrend"), {
+    type: "line",
+    data: {
+      labels: DATA.monthly_revenue.map(r => r.month),
+      datasets: [{
+        label: "Revenue",
+        data: DATA.monthly_revenue.map(r => r.revenue),
+        borderColor: "#2563eb",
+        backgroundColor: "rgba(37,99,235,0.12)",
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { ticks: { callback: (v) => fmtMoneyShort(v) } } }
+    }
+  });
+}
+
+function renderTopProducts() {
+  const items = DATA.top_products;
+  new Chart(document.getElementById("topProducts"), {
+    type: "bar",
+    data: {
+      labels: items.map(p => p.name),
+      datasets: [{
+        label: "Revenue",
+        data: items.map(p => p.revenue),
+        backgroundColor: "#2563eb",
+      }]
+    },
+    options: {
+      indexAxis: "y",
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { x: { ticks: { callback: (v) => fmtMoneyShort(v) } } }
+    }
+  });
+}
+
+function renderCategoryShare() {
+  const items = DATA.category_share;
+  new Chart(document.getElementById("categoryShare"), {
+    type: "doughnut",
+    data: {
+      labels: items.map(c => c.category),
+      datasets: [{
+        data: items.map(c => c.revenue),
+        backgroundColor: palette,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: "right", labels: { boxWidth: 12, font: { size: 11 } } } }
+    }
+  });
+}
+
+function renderStorePerf() {
+  const items = DATA.store_performance;
+  new Chart(document.getElementById("storePerf"), {
+    data: {
+      labels: items.map(s => s.store_name),
+      datasets: [
+        {
+          type: "bar",
+          label: "Revenue",
+          data: items.map(s => s.revenue),
+          backgroundColor: "#2563eb",
+          yAxisID: "y",
+        },
+        {
+          type: "line",
+          label: "Stockout rate (%)",
+          data: items.map(s => s.stockout_rate_pct),
+          borderColor: "#dc2626",
+          backgroundColor: "#dc2626",
+          yAxisID: "y1",
+          tension: 0.3,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: "index", intersect: false },
+      scales: {
+        y: { position: "left", ticks: { callback: (v) => fmtMoneyShort(v) } },
+        y1: { position: "right", grid: { drawOnChartArea: false }, ticks: { callback: (v) => v + "%" } },
+      }
+    }
+  });
+}
+
+function renderRiskTable() {
+  const rows = DATA.top_stockout_risk.map(r => `
+    <tr>
+      <td>${r.name}</td>
+      <td class="num">${r.pct_days_at_or_below_reorder_point}%</td>
+      <td class="num">${fmtMoney(r.lost_revenue)}</td>
+    </tr>
+  `).join("");
+  document.getElementById("riskTableBody").innerHTML = rows;
+}
+
+renderKpis();
+renderRevenueTrend();
+renderTopProducts();
+renderCategoryShare();
+renderStorePerf();
+renderRiskTable();
+</script>
+</body>
+</html>
