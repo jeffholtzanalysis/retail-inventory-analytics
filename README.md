@@ -1,1 +1,1 @@
-# retail-inventory-analytics-keep-it-Public-click-Create-repositoryretail-inventory-analytics, keep it Public, click Create repository
+# retail-inventory-analytics-keep-it-Public-click-Create-repositoryretail-inventory-analytics, keep it Public, click Create repositoryOnce it's live, the URL should indeed be https://jh1990651.github.io/retail-inventory-analytics/dashboard.html
