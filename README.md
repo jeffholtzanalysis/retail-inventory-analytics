@@ -1,6 +1,6 @@
 # Retail Inventory Analytics
 
-**Live dashboard:** https://jh1990651.github.io/retail-inventory-analytics/dashboard.html
+**Live dashboard:** https://jeffholtzanalysis.github.io/retail-inventory-analytics-keep-it-Public-click-Create-repository/dashboard.html
 *(link goes live once GitHub Pages is enabled for this repo — see [Deploying your own copy](#deploying-your-own-copy) below)*
 
 A end-to-end data analysis project simulating one year of sales and inventory
